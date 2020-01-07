@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue基础学习</title>
+</head>
+<body>
+    <div id="app">
+        <h2>你输入的内容是：{{myinput}}</h2>
+        <h2>你输入的详细信息是：{{myinfo}}</h2>
+        <input type="text" v-model="myinput">
+        <textarea v-model="myinfo"></textarea>
+    </div>
+</body>
+</html>
+<!-- 导包，导入Vue开发环境文件 -->
+<script src="./lib/vue.js"></script>
+<!-- 用包，构建Vue实例 -->
+<script>
+    const app = new Vue({
+        el:"#app",
+        data:{
+            myinput:"很好，很强大",
+            myinfo:"这是很强大的班长"
+        },
+        methods:{
+            
+        }
+    })
+</script>

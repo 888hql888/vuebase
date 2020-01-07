@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <style>
+    #app {
+      text-align: center;
+    }
+
+    div {
+      width: 400px;
+      margin: 20px auto;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h2>天气查查查</h2>
+    <input type="text" placeholder="请输入查询的城市"/>
+    <button>点击查询</button>
+    <div>
+      <p>
+        今天 晴 高温30度 低温11度
+        <span>🌧️</span>
+        <span>🌥️</span>
+        <span>🌞</span>
+      </p>
+    </div>
+  </div>
+</body>
+
+</html>
+<!-- 导包 -->
+<script src="./js/vue.js"></script>
+<script src="./js/jquery-1.12.4.min.js"></script>
+<script>
+  const app = new Vue({
+    el:"#app"
+  })
+</script>

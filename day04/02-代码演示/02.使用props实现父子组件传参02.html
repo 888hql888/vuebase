@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        <my-box :parm="msg"></my-box>
+        <my-box color="red"></my-box>
+        <my-box color="yellow"></my-box>
+
+    </div>
+</body>
+</html>
+<script src="./lib/vue.js"></script>
+<script>
+//定义子组件
+Vue.component('myBox',{
+    template:`
+    <div>
+        <p :style="{color:color}">我是子组件~~~,父组件传过来的值是----{{parm}}</p>
+    </div>
+    `,
+    props:{
+        parm:{
+            type:String,
+            default:"默认值"
+        },
+        color:{
+            type:String,
+            default:"blue"
+            
+        }
+    }
+})
+
+const app=new Vue({
+    el:"#app",
+    data:{
+        msg:"父组件传值哟0001"
+    }
+})
+
+
+</script>

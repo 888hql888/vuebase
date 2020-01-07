@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: all 5s;
+    }
+
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+        transform: translateX(600px);
+    }
+</style>
+
+<body>
+    <div id="app">
+        <p>
+            <button @click="arr.push('犬夜叉')">点击我添加元素</button>
+        </p>
+        <transition-group name="fade" tag="ul">
+            <li v-for="(item , index) in arr" :key="item" @click="removeItem(index)">
+                {{index}} {{item}}
+            </li>
+        </transition-group>
+
+    </div>
+</body>
+
+</html>
+<script src="./lib/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            arr: [
+                "蜡笔小新",
+                "樱桃小丸子",
+                "海绵宝宝",
+                "辣椒酱",
+                "辣椒油"
+            ]
+        },
+        methods:{
+            removeItem(index){
+                console.log(index);
+                this.arr.splice(index,1)
+            }
+        }
+    })
+</script>

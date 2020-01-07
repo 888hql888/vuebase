@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+img{
+    width: 200px;
+}
+.mybox{
+    border:1px solid #333;
+}
+</style>
+<body>
+    <div id="app">
+        <!-- 使用Vue组件来实现复用 -->
+        <!-- 在这里调用子组件 myBox 并且声明一个属性 -->
+        <my-box :fmsg="msg" title="这是我的Title" color="red"></my-box>
+        <my-box color="blue"></my-box>
+        <my-box color="green"></my-box>
+        <my-box></my-box>
+    </div>
+</body>
+
+</html>
+<script src="./lib/vue.js"></script>
+<script type="text/html" id="myBox">
+    <div class="mybox">
+        <!-- 在子组件里面使用父组件传递过来的值，和data里面定义的属性一模一样的使用 -->
+        <p>父组件的msg是：{{fmsg}}</p>
+        <p>我传入的title是：{{title}}</p>
+        <p>{{msg}}</p>
+        <h2 :style="{ color:color }">我是myBox组件的模板部分</h2>
+        <p><button @click="sayHi">点我试试</button></p>
+    </div>
+</script>
+<script>
+    Vue.component("myBox",{
+        template:"#myBox",
+        // 用来接收父组件传递过来的值
+        props:{
+            // 这里的属性名要和调用这个组件的时候传入的属性名是一致的
+            fmsg:{
+                type:String,
+                default:"我是fatherMsg传入过来的初始值"
+            },
+            title:{
+                type:String
+            },
+            color:{
+                type:String,
+                default:"pink"
+            }
+        },
+        data(){
+            return {
+                msg:"这是一个很寂寞的天"
+            }
+        },
+        methods:{
+            sayHi(){
+                this.msg += "啊啊啊";
+                alert(this.msg)
+            }
+        }
+    })
+
+    //这里是vue的根实例对象 
+    const app = new Vue({
+        el: "#app",
+        // 在根实例中data的声明直接使用对象
+        data: {
+            msg:"下着有点伤心的雨"
+        }
+    })
+</script>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue基础学习</title>
+</head>
+<body>
+    <div id="app">
+        <h2 v-if="tag">这是一个很寂寞的天</h2>
+        <h2 v-else>下着有点伤心的雨</h2>
+
+        <h3 v-if=" age > 30 ">人到中年不得已，保温杯里泡枸杞</h3>
+        <h3 v-else-if="age > 18">意气风发的青葱岁月，我在部队</h3>
+        <h3 v-else>小屁孩，不懂事</h3>
+    </div>
+</body>
+</html>
+<!-- 导包，导入Vue开发环境文件 -->
+<script src="./lib/vue.js"></script>
+<!-- 用包，构建Vue实例 -->
+<script>
+    const app = new Vue({
+        el:"#app",
+        data:{
+            tag:true,
+            age:18
+        }
+    })
+</script>

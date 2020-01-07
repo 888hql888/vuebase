@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p v-text=" msg " title="下着有点伤心的雨"></p>
+        <p>{{msg}}</p>
+        <p v-html="hmsg"></p>
+
+        <p v-bind:title="msg">看看我的title吧</p>
+        <p :title="hmsg">{{msg}}</p>
+
+        <p v-on:click="sayHello">点我试试</p>
+        <p @click="sayHello">点我试试</p>
+        <p>
+            <input type="text" v-model="msg">
+            <input type="text" :value="msg" @input="myInput">
+        </p>
+        <div>
+            <p v-for=" item in arr">{{item}}</p>
+            <p v-if="showTag">我显示了吗？</p>
+            <p v-show="showTag">我显示了吗？</p>
+        </div>
+    </div>
+</body>
+</html>
+<!-- 导包 -->
+<script src="./lib//vue.js"></script>
+<!-- 用包 -->
+<script>
+    const app = new Vue({
+        el:"#app",
+        data:{
+            msg:"这是一个很寂寞的天",
+            hmsg:"<h2>蜡笔小新</h2>",
+            arr:[
+                "蜡笔小新",
+                "樱桃小丸子",
+                "犬夜叉",
+                "柯蓝"
+            ],
+            showTag:false
+        },
+        methods:{
+            sayHello(){
+                alert("hi how are you")
+            },
+            myInput(){
+                this.msg = event.target.value
+            }
+        }
+    })
+</script>

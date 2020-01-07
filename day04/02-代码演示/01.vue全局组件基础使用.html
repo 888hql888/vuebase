@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+img{
+    width: 200px;
+}
+</style>
+<body>
+    <div id="app">
+        <!-- 常规的页面写法 使用复制粘贴的方法 -->
+        <div class="info">
+            <img src="./images/1.png">
+            <p>蜡笔小新</p>
+        </div>
+        <div class="info">
+            <img src="./images/2.png">
+            <p>樱桃小丸子</p>
+        </div>
+        <div class="info">
+            <img src="./images/3.png">
+            <p>辣椒酱</p>
+        </div>
+        <!-- 使用Vue组件来实现复用 -->
+        <my-info></my-info>
+        <my-info></my-info>
+        <my-info></my-info>
+        <my-info></my-info>
+        <my-box></my-box>
+        <my-box></my-box>
+        <my-box></my-box>
+        <my-box></my-box>
+        <my-box></my-box>
+        <my-box></my-box>
+    </div>
+</body>
+
+</html>
+<script src="./lib/vue.js"></script>
+<script type="text/html" id="myBox">
+    <div>
+        <p>{{msg}}</p>
+        <h2>我是myBox组件的模板部分</h2>
+        <p><button @click="sayHi">点我试试</button></p>
+    </div>
+</script>
+<script>
+    // 全局组件的注册
+    Vue.component("myInfo",{
+        // 使用template来做标签的模板，注意：必须要有一个根标签包裹起来
+        template:`
+            <div class="info">
+                <img src="./images/1.png">
+                <p>{{msg}}</p>
+            </div>
+        `,
+        // 组件内部也会使用到定义的data属性
+        data(){
+            return {
+                msg:"蜡笔小新"
+            }
+        },
+        // 组件内部也会定义其自己的方法
+        methods:{
+            
+        },
+        // 组件内部也有生命周期钩子函数
+        // 组件内部也有计算属性和过滤器
+    })
+    
+    Vue.component("myBox",{
+        template:"#myBox",
+        data(){
+            return {
+                msg:"这是一个很寂寞的天"
+            }
+        },
+        methods:{
+            sayHi(){
+                this.msg += "啊啊啊";
+                alert(this.msg)
+            }
+        }
+    })
+
+    const app = new Vue({
+        el: "#app",
+        // 在根实例中data的声明直接使用对象
+        data: {
+
+        }
+    })
+</script>

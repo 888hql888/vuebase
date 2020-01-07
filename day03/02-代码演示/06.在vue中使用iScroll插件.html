@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    #box {
+        height: 100px;
+        border: 1px solid #333;
+        overflow: hidden;
+    }
+    ul{
+        padding: 50px;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p><button @click="addLi">点我添加li元素</button></p>
+        <div id="box" ref="mybox">
+            <ul>
+                <li v-for="(item , index ) in arr">{{index}}{{item}}</li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="./lib/vue.js"></script>
+<script src="./lib/iscroll.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            arr: [
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新",
+                "蜡笔小新"
+            ],
+            // 定义一个myscroll的数据节点
+            myScroll:null
+        },
+        // mounted 挂载完成的生命周期钩子函数
+        mounted() {
+            //var wrapper = document.getElementById('box');
+            this.myScroll = new IScroll(this.$refs.mybox, {
+                mouseWheel: true,
+                scrollbars: true
+            });
+        },
+        // updated 数据更新完成并且渲染到页面上后调用的生命周期钩子函数
+        updated(){
+            this.myScroll.refresh();
+        },
+        methods: {
+            addLi() {
+                this.arr.push("辣椒酱");
+            }
+        }
+    })
+</script>

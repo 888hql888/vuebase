@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .box{
+        width: 100px;
+        height: 100px;
+        background: red;
+        opacity: 1;
+    }
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 5s;
+    }
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
+</style>
+<body>
+    <div id="app">
+        <p><button @click="showTag=!showTag">点我切换效果</button></p>
+        <!-- 单个元素动画，需要使用 transition 标签包裹起来 -->
+        <!-- 使用一个 name 属性，这个name 属性是用来配合作为css的类名前缀 -->
+        <transition name="fade">
+            <!-- 单个元素动画需要触发时机，根据v-if/v-show来切换显示的过程 -->
+            <div class="box" v-show="showTag"></div>
+        </transition>
+    </div>
+</body>
+
+</html>
+<script src="./lib/vue.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data:{
+            showTag:false
+        }
+    })
+</script>

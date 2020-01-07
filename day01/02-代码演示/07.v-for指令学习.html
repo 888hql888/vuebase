@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue基础学习</title>
+</head>
+<body>
+    <div id="app">
+        <p>
+            {{arr}}
+        </p>
+        <p v-for="(name,index) in arr"> {{index}} · {{name}}</p>
+        <p>
+            <template v-for="(name,index) in arr"> {{index}} · {{name}}</template>
+        </p>
+    </div>
+</body>
+</html>
+<!-- 导包，导入Vue开发环境文件 -->
+<script src="./lib/vue.js"></script>
+<!-- 用包，构建Vue实例 -->
+<script>
+    const app = new Vue({
+        el:"#app",
+        data:{
+            arr:[
+                "蜡笔小新",
+                "樱桃小丸子",
+                "海绵宝宝",
+                "皮卡丘",
+                "辣椒酱"
+            ]
+        }
+    })
+</script>

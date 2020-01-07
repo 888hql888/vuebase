@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue基础学习</title>
+</head>
+<style>
+    img {
+        width: 80%;
+    }
+
+    .bos {
+        font-size: 100px;
+    }
+
+    .red {
+        color: red;
+    }
+
+    .green {
+        color: green;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <h2>{{src}}</h2>
+        <p>
+            <img v-bind:src="nsrc" alt="" v-bind:title="nsrc">
+        </p>
+        <p>
+            <img :src="src" alt="">
+        </p>
+        <p>
+            <h2 class="bos" :class="className">我是H2</h2>
+        </p>
+        <p>
+            <h2 class="bos" :class="cobj">我是H2</h2>
+        </p>
+        <p>
+            <h2 :style=" mystyle ">我是style</h2>
+        </p>
+        <p>
+            <h2 :style="mystyleb">nihao</h2>
+        </p>
+    </div>
+</body>
+
+</html>
+<!-- 导包，导入Vue开发环境文件 -->
+<script src="./lib/vue.js"></script>
+<!-- 用包，构建Vue实例 -->
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            src: "./img/2.jpg",
+            nsrc: "./img/3.jpg",
+            className: "red",
+            tag: false,
+            taga: true,
+            cobj: {
+                green: false,
+                line: true
+            },
+            mystyle:'color:yellow;' ,
+            mystyleb:{
+                color:"pink",
+                fontSize:"200px"
+            }
+        }
+    })
+</script>

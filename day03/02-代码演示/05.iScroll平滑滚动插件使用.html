@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    #box {
+        height: 100px;
+        border: 1px solid #333;
+        overflow: hidden;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p><button>点我添加li元素</button></p>
+        <div id="box">
+            <ul>
+                <li>这是第1i个元素</li>
+                <li>这是第2i个元素</li>
+                <li>这是第3i个元素</li>
+                <li>这是第4i个元素</li>
+                <li>这是第5i个元素</li>
+                <li>这是第6i个元素</li>
+                <li>这是第7i个元素</li>
+                <li>这是第8i个元素</li>
+                <li>这是第9i个元素</li>
+                <li>这是第10i个元素</li>
+                <li>这是第11i个元素</li>
+                <li>这是第12i个元素</li>
+                <li>这是第13i个元素</li>
+                <li>这是第14i个元素</li>
+                <li>这是第15i个元素</li>
+                <li>这是第16i个元素</li>
+                <li>这是第17i个元素</li>
+                <li>这是第18i个元素</li>
+                <li>这是第19i个元素</li>
+                <li>这是第20i个元素</li>
+            </ul>
+
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="./lib/iscroll.js"></script>
+<script>
+    var wrapper = document.getElementById('box');
+    var myScroll = new IScroll("#box", {
+        mouseWheel: true,
+        scrollbars: true
+    });
+
+    document.querySelector("button").onclick = function () {
+        const li = document.createElement("li");
+        li.innerHTML = "我是动态新添加的li元素";
+        document.querySelector("ul").appendChild(li);
+        myScroll.refresh();
+    }
+</script>

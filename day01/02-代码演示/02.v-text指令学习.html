@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue基础学习</title>
+</head>
+<body>
+    <div id="app">
+        <h2 v-text=" msg ">我爱吃！</h2>
+        <h2 v-text=" nmsg "></h2>
+        <h2 v-text=" obj.name "></h2>
+        <h2>我爱吃！{{msg}}</h2>
+        <h2>{{ msg + hahahah }}</h2>
+        <h2>{{ tag ? msg : obj.name }}</h2>
+    </div>
+</body>
+</html>
+<!-- 导包，导入Vue开发环境文件 -->
+<script src="./lib/vue.js"></script>
+<!-- 用包，构建Vue实例 -->
+<script>
+    const app = new Vue({
+        el:"#app",
+        data:{
+            msg:"辣椒酱",
+            nmsg:"<h3>辣椒油</h3>",
+            obj:{
+                name:"辣椒油"
+            },
+            hahahah:"hahahaha",
+            tag:true
+        }
+    })
+</script>

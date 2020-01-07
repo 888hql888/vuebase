@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue基础知识</title>
+</head>
+<body>
+    <div id="app">
+        <h2>阻止事件的默认行为</h2>
+        <!-- 使用事件修饰符来阻止默认行为，事件修饰符就是事件后面追加的一个单词 -->
+        <p><a href="http://baidu.cn" @click.prevent="gotoHere">点我去百度</a></p>
+        <p>{{msg}}</p>
+        <p><input type="text" v-model.trim="msg" @keyup.enter="gotoHaha"></p>
+    </div>
+</body>
+</html>
+<script src="./lib/vue.js"></script>
+<script>
+const app = new Vue({
+    el:"#app",
+    data:{
+        msg:"辣椒酱"
+    },
+    methods:{
+        gotoHere(){
+            this.msg = "辣椒油"
+        },
+        gotoHaha(){
+            this.msg = "点了回车键以后的情况"
+        }
+    }
+})
+</script>

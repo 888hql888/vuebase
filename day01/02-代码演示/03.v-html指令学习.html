@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue基础学习</title>
+</head>
+<body>
+    <div id="app">
+        <p>
+            <!-- innerText -->
+            {{hmsg}}
+        </p>
+        <!-- innerHtml -->
+        <p v-html="hmsg"></p>
+        <!-- attr -->
+    </div>
+</body>
+</html>
+<!-- 导包，导入Vue开发环境文件 -->
+<script src="./lib/vue.js"></script>
+<!-- 用包，构建Vue实例 -->
+<script>
+    const app = new Vue({
+        el:"#app",
+        data:{
+            hmsg:"<button>点我试试</button>"
+        }
+    })
+</script>

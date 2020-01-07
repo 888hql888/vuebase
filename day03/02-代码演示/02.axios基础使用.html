@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p><button @click="sendGet">点我发送Get请求</button></p>
+        <p><button @click="sendPost">点我发送POST请求</button></p>
+    </div>
+</body>
+
+</html>
+<script src="./lib/vue.js"></script>
+<!-- 导入axios包 -->
+<script src="./lib/axios.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        methods: {
+            sendGet() {
+                // 使用axios发送get请求
+                axios.get('http://wthrcdn.etouch.cn/weather_mini?city=深圳').then(data => {
+                    console.log(data);
+                }).catch(err => {
+                    console.log(err);
+                })
+            },
+            sendPost() {
+                // 使用axios发送post请求
+                axios.post('http://www.tuling123.com/openapi/api', {
+                    key: '7b1cf467c0394dd5b3e49f32663f8b29',
+                    info: '知心姐姐你好美'
+                }).then(data => {
+                    console.log(data);
+                }).catch(err => {
+                    console.log(err);
+                })
+            }
+        }
+    })
+</script>

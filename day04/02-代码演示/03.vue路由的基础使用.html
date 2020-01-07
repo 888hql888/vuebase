@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .box {
+        border: 2px solid #333;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <!-- 
+            这里是全局组件直接调用，
+            需要清醒的认识到路由组件是用来切换滴，
+            不是用来直接调用显示滴，
+            如果说你要直接调用显示，那你就不能用路由组件声明，你用全局组件就可以了
+         -->
+        <index></index>
+        <user></user>
+        <product></product>
+
+        <!-- 
+            前面五步，我们定义了路由规则并且实例化了对象，绑定进了vue实例中去 
+            现在，我是不是要在页面中按需显示和隐藏我们的路由组件实现前端路由功能
+        -->
+        <p>____________________________________________________</p>
+        <div>
+            <!-- 调用路由，使用router-link标签，其功能和a标签是一个意思，最终也是被解析成为一个a标签 -->
+            <!-- <a href="/index">首页</a> -->
+            <router-link to="/index">首页</router-link>
+            <router-link to="/product">产品</router-link>
+        </div>
+        <div>
+            <!-- 使用router-view来作为组件页面的出口显示区域 -->
+            <router-view></router-view>
+            <router-view></router-view>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="./lib/vue.js"></script>
+<!-- 
+    第一步：导包
+    使用vue-router路由，首先需要导包，要注意哦！
+    导包必须在vue文件后面，因为vue是vue-router的依赖插件
+-->
+<script src="./lib/vue-router.js"></script>
+<script>
+    // 定义index（全局）组件
+    Vue.component("index", {
+        template: `
+            <div class="box">
+                <h2>这里是index组件</h2>
+                <p>index组件的详情内容</p>
+            </div>
+        `
+    });
+    // 定义user（全局）组件
+    Vue.component("user", {
+        template: `
+            <div class="box">
+                <h2>这里是user组件</h2>
+                <p>user组件的详情内容</p>
+            </div>
+        `
+    });
+    // 定义product（全局）组件
+    Vue.component("product", {
+        template: `
+            <div class="box">
+                <h2>这里是product组件</h2>
+                <p>product组件的详情内容</p>
+            </div>
+        `
+    });
+
+
+    // 第二步： 定义 (路由) 组件
+    const Index = {
+        template: `
+            <div class="box">
+                <h2>这里是index页面</h2>
+                <p>index页面的详情内容</p>
+            </div>
+        `
+    }
+    const Product = {
+        template: `
+            <div class="box">
+                <h2>这里是product页面</h2>
+                <p>product页面的详情内容</p>
+            </div>
+        `
+    }
+
+    // 第三步：定义路由规则，每个路由应该映射一个组件，每个路由匹配一个地址
+    const routes = [{
+            path: '/index',
+            component: Index
+        },
+        {
+            path: '/product',
+            component: Product
+        }
+    ]
+
+    // 第四步：创建 router 实例
+    const router = new VueRouter({
+        routes // (缩写) 相当于 routes: routes
+    })
+
+    // 第五步：将router对象挂载到vue的实例上
+    const app = new Vue({
+        el: "#app",
+        router,
+        data: {
+
+        }
+    })
+</script>

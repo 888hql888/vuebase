@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <style>
+    #app {
+      text-align: center;
+    }
+
+    div {
+      width: 400px;
+      margin: 20px auto;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <h2>天气查查查</h2>
+    <input type="text" v-model.trim="city" placeholder="请输入查询的城市" @keyup.enter="searchWeather"/>
+    <button @click="searchWeather">点击查询</button>
+    <div>
+      <p v-for="(wetaher,index) in weatherList">
+        {{wetaher.date}} {{wetaher.high}} {{wetaher.low}} {{wetaher.type}} 
+        <span v-if="wetaher.type.indexOf('雨')>-1">🌧️</span>
+        <span v-if="wetaher.type.indexOf('云')>-1">🌥️</span>
+        <span v-if="wetaher.type.indexOf('晴')>-1">🌞</span>
+      </p>
+    </div>
+  </div>
+</body>
+
+</html>
+<!-- 导包 -->
+<script src="./js/vue.js"></script>
+<script src="./js/jquery-1.12.4.min.js"></script>
+<script>
+  const app = new Vue({
+    el:"#app",
+    data:{
+      city:"",
+      // 用来保存天气列表的数组
+      weatherList:[]
+    },
+    methods:{
+      // 在这里不能使用箭头函数是因为 this 将会指向到window对象，所以使用普通匿名函数，指向到当前的vue实例
+      searchWeather(){
+        $.ajax({
+          url:"http://wthrcdn.etouch.cn/weather_mini?city="+this.city,
+          type:"GET",
+          dataType:"json",
+          // 这里使用箭头函数，是因为如果使用普通函数指向的就是ajax这个对象，使用箭头函数确保this指向当前vue实例
+          success: data => {
+            console.log(data.data.forecast);
+            this.weatherList = data.data.forecast;
+          }
+        })
+      }
+    }
+  })
+</script>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/iconfont.css">
+  <link rel="stylesheet" href="./css/results.css">
+  <link rel="stylesheet" href="./css/player.css">
+  <link rel="stylesheet" href="./css/video.css">
+  <link rel="stylesheet" href="./css/comment.css">
+</head>
+
+<body>
+  <div id="player">
+    <my-nav></my-nav>
+  </div>
+</body>
+
+</html>
+<!-- 导入相关的包 -->
+<script src="./lib/vue.js"></script>
+<script src="./lib/vue-router.js"></script>
+<script src="./lib/axios.js"></script>
+<!-- 构建Vue组件的模板 -->
+<!-- 这里是导航相关的全局组件模板 -->
+<script type="text/html" id="mynav">
+  <div>
+    <h2 class="title">黑云音乐</h2>
+    <div class="search">
+      <input type="text" v-model="keyword" @keyup.enter="searchMusic" />
+      <button @click="searchMusic">
+        <span class="iconfont icon-search"></span>
+      </button>
+    </div>
+    <div class="tab-wrapper">
+      <!-- tab栏 -->
+      <!-- 路由声明完成以后，调用其实就是a标签，to就是a标签的地址 -->
+      <!-- 
+          <div class="tab-bar">
+          <router-link to="/results" class="bar-item" active-class="active">搜索结果</router-link>
+          <router-link to="/player" class="bar-item" active-class="active">歌曲播放</router-link>
+          <router-link to="/mv" class="bar-item" active-class="active">mv</router-link>
+          <router-link to="/comment" class="bar-item" active-class="active">歌曲评论</router-link> 
+          </div>
+        -->
+      <!-- 对应的内容区域 -->
+      <div class="tab-content">
+        <!-- 路由页面显示出口 -->
+        <router-view></router-view>
+      </div>
+    </div>
+  </div>
+</script>
+<!-- 这里是搜索结果的模板 -->
+<script type="text/html" id="myresult">
+  <div class="result-wrapper">
+    <div class="song" v-for="(music,index) in musicList" :key="music.id">
+      <div class="name">
+        <span class="iconfont icon-play" @click="gotoPlayer(music.id)"></span>
+        <span @clcik="gotoComment">{{music.name}}</span>
+        <span @click="gotoMv" class="iconfont icon-editmedia" v-if="music.mvid != 0"></span>
+      </div>
+      <div class="singer">{{ music.artists | formateArt }}</div>
+      <div class="album">《{{ music.album.name }}》</div>
+      <div class="time">{{ music.duration | formateTmie}}</div>
+    </div>
+  </div>
+</script>
+<!-- 这里是歌曲播放的模板 -->
+<script type="text/html" id="myplayer">
+  <div class="player">
+    <div class="left">
+      <img class='disc' src="./img/disc.png" alt="">
+      <img class='cover' :src="mpic" alt="">
+    </div>
+    <div class="right">
+      <div class="title"><img :src="mpic" alt=""><span>{{mname}}</span> </div>
+      <div class="singer">歌手: <span>{{mplayers}}</span></div>
+      <div class="album">所属专辑: <span>{{mal}}</span></div>
+      <audio class='audio' controls :src="msrc"></audio>
+      <ul class='lyric-container'>
+        <li v-for="(item, index) in lyric">{{item}}</li>
+      </ul>
+    </div>
+  </div>
+</script>
+<!-- 这里是搜MV的模板 -->
+<script type="text/html" id="mymv">
+  <div class="video">
+    <div class="title-wrapper">
+      <span class='tag'>MV</span>
+      <span class='title'>冲动的惩罚</span>
+      <span class='artist'>刀郎</span>
+    </div>
+    <video src="" controls></video>
+  </div>
+</script>
+<!-- 这里是评论列表的模板 -->
+<script type="text/html" id="mycomment">
+  <div class="comment-wrapper">
+    <div class="items">
+      <div class="item">
+        <div class="left">
+          <img src="./img/icon.jpg" alt="">
+        </div>
+        <div class="right">
+          <div class="top">
+            <span class='user'>阿木木:</span>
+            <span
+              class='content'>写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心</span>
+          </div>
+          <div class="bottom">
+            <div class="time">2016年9月18日</div>
+            <div class="like-wrapper">
+              <span>👍</span>(6666)
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="left">
+          <img src="./img/icon.jpg" alt="">
+        </div>
+        <div class="right">
+          <div class="top">
+            <span class='user'>阿木木:</span>
+            <span
+              class='content'>写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心</span>
+          </div>
+          <div class="bottom">
+            <div class="time">2016年9月18日</div>
+            <div class="like-wrapper">
+              <span>👍</span>(6666)
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="left">
+          <img src="./img/icon.jpg" alt="">
+        </div>
+        <div class="right">
+          <div class="top">
+            <span class='user'>阿木木:</span>
+            <span
+              class='content'>写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心写歌的人假正经，唱歌的人最矫情，听歌的人最用心</span>
+          </div>
+          <div class="bottom">
+            <div class="time">2016年9月18日</div>
+            <div class="like-wrapper">
+              <span>👍</span>(6666)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+<!-- 用包 -->
+<script>
+  // 创建一个Vue的全局组件  - 全局组件
+  Vue.component("myNav", {
+    template: "#mynav",
+    data() {
+      return {
+        keyword: ""
+      }
+    },
+    methods: {
+      searchMusic() {
+        // 要实现编程式导航跳转，使用下面的固定模式
+        // 带参数的动态路由调用，直接使用 / 后面跟着我们要传递的数据即可
+        this.$router.push("/results/" + this.keyword);
+      }
+    }
+  })
+
+  // 创建路由组件实现功能模块的切换 - 路由组件
+  // 第一步： 定义 (路由) 组件
+  // 这里是搜索结果的路由组件
+  const Results = {
+    template: "#myresult",
+    data() {
+      return {
+        musicList: []
+      }
+    },
+    methods: {
+      gotoPlayer(id) {
+        this.$router.push("/player/" + id)
+      },
+      gotoComment() {
+        this.$router.push("/comment")
+      },
+      gotoMv() {
+        this.$router.push("/mv")
+      }
+    },
+    // 在这里使用mounted不太合理，为什么呢？因为，mounted是页面都渲染完了才去请求数据，是不是有点晚呢？
+    // 在这里使用created生命周期钩子函数，比较合理，为什么呢？因为，这个时候数据已经创建，发出请求返回后就可以赋值生效了
+    created() {
+      // 动态路由的参数传递成功以后，可以在显示页面组件中使用 this.$route.params.我们自定义的变量名 拿到我们传递值
+      console.log(this.$route.params.keyword);
+      axios.get("https://autumnfish.cn/search?keywords=" + this.$route.params.keyword).then(data => {
+        console.log(data.data.result.songs);
+        this.musicList = data.data.result.songs;
+      }).catch(err => {
+
+      })
+    },
+    // 定义过滤器
+    filters: {
+      // 定义歌曲歌唱者的过滤器
+      formateArt(arr) {
+        let art = "";
+        for (let i = 0; i < arr.length; i++) {
+          art += arr[i].name + " "
+        }
+        return art
+      },
+      // 定义歌曲时长的过滤器
+      formateTmie(num) {
+        return ~~(num / 1000 / 60) + "分" + ~~(num / 1000) % 60 + "秒"
+      }
+    }
+  }
+  // 这里是歌曲播放的路由组件
+  const Player = {
+    template: "#myplayer",
+    data() {
+      return {
+        // 歌曲地址
+        msrc: "",
+        // 歌曲封面
+        mpic: "",
+        // 歌曲名
+        mname: "",
+        // 歌手
+        mplayers: "",
+        // 专辑名
+        mal: "",
+        // 歌词
+        lyric: [],
+        // 设置一个基础地址
+        baseUrl:"https://autumnfish.cn/"
+      }
+    },
+    created() {
+      console.log(this.$route.params.id);
+      // 请求播放的音乐地址
+      axios.get(`${this.baseUrl}song/url?id=` + this.$route.params.id).then(data => {
+        this.msrc = data.data.data[0].url;
+      }).catch(err => {
+
+      })
+      // 请求播放的音乐封面
+      axios.get(`${this.baseUrl}song/detail?ids=` + this.$route.params.id).then(data => {
+        console.log(data);
+        // 封面地址
+        this.mpic = data.data.songs[0].al.picUrl;
+        // 专辑名
+        this.mal = data.data.songs[0].al.name;
+        // 歌手名
+        this.mplayers = data.data.songs[0].ar[0].name;
+        // 歌名
+        this.mname = data.data.songs[0].name;
+      }).catch(err => {
+
+      })
+      // 获取歌词
+      axios
+        .get(`${this.baseUrl}/lyric?id=${this.$route.params.id}`)
+        .then(backData => {
+          // console.log(backData)
+          // 保存歌词为数组
+          this.lyric = backData.data.lrc.lyric.split('\n');
+          // 循环数组 切掉 [00:00.000]
+          for (let i = 0; i < this.lyric.length; i++) {
+            this.lyric[i] = this.lyric[i].slice(10);
+          }
+        });
+    }
+  }
+  // 这里是MV的路由组件
+  const MV = {
+    template: "#mymv"
+  }
+  // 这里是歌曲评论的路由组件
+  const Comment = {
+    template: "#mycomment"
+  }
+
+  // 第二步：定义路由规则，每个路由应该映射一个组件，每个路由匹配一个地址
+  const routes = [{
+      //定义动态路由  带参数的动态路由 后面直接跟着 / 然后要声明一个变量 使用 ：开头，变量名随便取
+      path: '/results/:keyword',
+      component: Results
+    },
+    {
+      path: '/player/:id',
+      component: Player
+    },
+    {
+      path: '/mv',
+      component: MV
+    },
+    {
+      path: '/comment',
+      component: Comment
+    }
+  ]
+
+  // 第三步：创建 router 实例
+  const router = new VueRouter({
+    routes // (缩写) 相当于 routes: routes
+  })
+
+  // 第四步：将router对象挂载到vue的实例上
+  // 实例化一个vue对象
+  const player = new Vue({
+    el: "#player",
+    router
+  })
+</script>
